@@ -1,9 +1,11 @@
 #! /bin/bash
 
+# # Networks
+# sudo cp /backup/* /etc/NetworkManager/system-connections/
+
 # First, optimize the dnf package manager
 sudo cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
 sudo cp dotfiles/dnf.conf /etc/dnf/dnf.conf
-
 
 # Check for updates
 sudo dnf upgrade --refresh
@@ -13,7 +15,6 @@ sudo dnf autoremove -y
 # sudo dnf install dnf-automatic -y
 # sudo cp dotfiles/dnf/automatic.conf /etc/dnf/automatic.conf
 # sudo systemctl enable --now dnf-automatic.timer
-
 
 # Enabling RPMFusion and Flathub
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y
@@ -39,7 +40,6 @@ gsettings set org.gnome.shell.extensions.pop-shell tile-by-default true
 gsettings set org.gnome.shell.extensions.pop-shell gap-outer 2
 gsettings set org.gnome.shell.extensions.pop-shell gap-inner 2
 
-
 # # Installing Google Noto Sans fonts, Microsoft Cascadia Code fonts and apply it to system fonts
 # sudo dnf install google-noto-sans-fonts -y
 # axel -n 20 https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip
@@ -61,7 +61,6 @@ flatpak install flathub com.getpostman.Postman
 systemctl disable iscsi
 sudo systemctl disable NetworkManager-wait-online.service
 
-
 # code
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -82,3 +81,4 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
+echo "REMEMBER TO tailscale -up"
