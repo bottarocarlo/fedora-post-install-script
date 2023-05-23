@@ -4,8 +4,9 @@
 # sudo cp /backup/* /etc/NetworkManager/system-connections/
 
 # First, optimize the dnf package manager
-# sudo cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
-# sudo cp dotfiles/dnf.conf /etc/dnf/dnf.conf
+sudo cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
+sudo cp dotfiles/dnf.conf /etc/dnf/dnf.conf
+sudo cp dotfiles/.zshrc /home/$USER
 
 # Check for updates
 sudo dnf upgrade --refresh -y
@@ -28,7 +29,6 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 
 # ffmpeg
 sudo dnf install ffmpeg -y
-
 
 # Installing media codecs
 sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel -y
@@ -55,7 +55,7 @@ gsettings set org.gnome.shell.extensions.pop-shell gap-inner 2
 # Docker 
 curl -fsSL https://get.docker.com/ | sh
 
-# Postman Spotify
+# Postman Spotify Telegram Discord
 flatpak install flathub com.getpostman.Postman -y
 flatpak install flathub com.spotify.Client -y
 flatpak install flathub org.telegram.desktop -y
@@ -69,20 +69,21 @@ sudo systemctl disable NetworkManager-wait-online.service
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 sudo dnf check-update
-sudo dnf install code
+sudo dnf install code -y
 
 #install node
-sudo dnf module install nodejs:18/common
+sudo dnf install nodejs
 
 # github ssh
-ssh-keygen -t ed25519 -C "bottarocarloo@gmail.com"
-git config --global user.name "bottarocarlo"
-git config --global user.email "bottarocarloo@gmail.com"
+echo ; echo ; echo | ssh-keygen -t ed25519 -C "bottarocarloo@gmail.com"   
+git config --global user.name "bottarocarlo" 
+git config --global user.email "bottarocarloo@gmail.com" 
 
-# oh my zsh
-sudo dnf install zsh curl -y
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
-echo "REMEMBER TO tailscale -up"
+
+# oh my zsh
+sudo dnf install zsh curl util-linux-user -y
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
