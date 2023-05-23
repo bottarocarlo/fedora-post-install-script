@@ -4,11 +4,11 @@
 # sudo cp /backup/* /etc/NetworkManager/system-connections/
 
 # First, optimize the dnf package manager
-sudo cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
-sudo cp dotfiles/dnf.conf /etc/dnf/dnf.conf
+# sudo cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
+# sudo cp dotfiles/dnf.conf /etc/dnf/dnf.conf
 
 # Check for updates
-sudo dnf upgrade --refresh
+sudo dnf upgrade --refresh -y
 sudo dnf autoremove -y
 
 # # Enabling dnf-automatic(Automatic updates)
@@ -23,11 +23,12 @@ sudo dnf upgrade --refresh -y
 sudo dnf groupupdate core -y
 sudo dnf install rpmfusion-free-release-tainted -y
 sudo dnf install dnf-plugins-core -y
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo -y
 
 
 # ffmpeg
-sudo dnf install ffmpeg
+sudo dnf install ffmpeg -y
+
 
 # Installing media codecs
 sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel -y
@@ -35,7 +36,7 @@ sudo dnf install lame\* --exclude=lame-devel -y
 sudo dnf group upgrade --with-optional Multimedia -y
 
 # Installing my extensions, includes Pop Shell, AppIndicator and SoundOutputDeviceChooser
-sudo dnf install gnome-shell-extension-pop-shell  -y
+sudo dnf install gnome-shell-extension-pop-shell gnome-shell-extension-dash-to-dock -y
 gsettings set org.gnome.shell.extensions.pop-shell tile-by-default true
 gsettings set org.gnome.shell.extensions.pop-shell gap-outer 2
 gsettings set org.gnome.shell.extensions.pop-shell gap-inner 2
@@ -54,21 +55,24 @@ gsettings set org.gnome.shell.extensions.pop-shell gap-inner 2
 # Docker 
 curl -fsSL https://get.docker.com/ | sh
 
-# Postman
-flatpak install flathub com.getpostman.Postman
+# Postman Spotify
+flatpak install flathub com.getpostman.Postman -y
+flatpak install flathub com.spotify.Client -y
+flatpak install flathub org.telegram.desktop -y
+flatpak install flathub com.discordapp.Discord -y
 
 # Optimize boot time
-systemctl disable iscsi
+sudo systemctl disable iscsi
 sudo systemctl disable NetworkManager-wait-online.service
 
 # code
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-dnf check-update
-dnf install code
+sudo dnf check-update
+sudo dnf install code
 
 #install node
-dnf module install nodejs:18/common
+sudo dnf module install nodejs:18/common
 
 # github ssh
 ssh-keygen -t ed25519 -C "bottarocarloo@gmail.com"
@@ -76,7 +80,7 @@ git config --global user.name "bottarocarlo"
 git config --global user.email "bottarocarloo@gmail.com"
 
 # oh my zsh
-dnf install zsh curl
+sudo dnf install zsh curl -y
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # tailscale
